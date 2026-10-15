@@ -1,23 +1,42 @@
 /* ============================================================
    Tab Mission Control — Dashboard Styles
-   Extracted directly from mockup.html — do not modify unless
-   also updating the mockup. This is the approved design.
    ============================================================ */
 
 :root {
-  --ink: #1a1613;
-  --paper: #f8f5f0;
-  --warm-gray: #e8e2da;
-  --muted: #9a918a;
-  --accent-amber: #c8713a;
-  --accent-sage: #5a7a62;
-  --accent-slate: #5a6b7a;
-  --accent-rose: #b35a5a;
-  --status-active: #3d7a4a;
-  --status-cooling: #b8892e;
-  --status-abandoned: #b35a5a;
-  --card-bg: #fffdf9;
-  --shadow: rgba(26, 22, 19, 0.06);
+  color-scheme: light dark;
+  --ink: light-dark(#1a1613, #eee8df);
+  --paper: light-dark(#f8f5f0, #191715);
+  --warm-gray: light-dark(#e8e2da, #48413b);
+  --muted: light-dark(#9a918a, #b1a69b);
+  --accent-amber: light-dark(#c8713a, #e7a16f);
+  --accent-sage: light-dark(#5a7a62, #96b99c);
+  --accent-slate: light-dark(#5a6b7a, #9bafc0);
+  --accent-rose: light-dark(#b35a5a, #e59494);
+  --status-active: light-dark(#3d7a4a, #8cbd96);
+  --status-cooling: light-dark(#b8892e, #d9b467);
+  --status-abandoned: light-dark(#b35a5a, #e59494);
+  --card-bg: light-dark(#fffdf9, #24211e);
+  --shadow: light-dark(rgba(26, 22, 19, 0.06), rgba(0, 0, 0, 0.25));
+}
+
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+.theme-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.theme-control select {
+  font: inherit;
+  color: var(--ink);
+  background: var(--card-bg);
+  border: 1px solid var(--warm-gray);
+  border-radius: 6px;
+  padding: 6px 8px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -59,6 +78,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
   margin-bottom: 48px;
   padding-bottom: 24px;
   border-bottom: 1px solid var(--warm-gray);
@@ -218,8 +239,10 @@ header {
 
 /* ---- Mission Cards ---- */
 .missions {
-  columns: 280px;
-  column-gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 12px;
+  align-items: start;
   margin-bottom: 40px;
 }
 
@@ -235,8 +258,7 @@ header {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  break-inside: avoid;       /* don't split a card across columns */
-  margin-bottom: 12px;       /* vertical spacing (replaces grid gap) */
+  min-width: 0;
 }
 
 /* Colored top border instead of side bar for grid cards */
@@ -702,7 +724,7 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
 
 .missions-empty-state {
   /* Takes the full width — spans all columns */
-  column-span: all;
+  grid-column: 1 / -1;
 
   display: flex;
   flex-direction: column;
@@ -898,7 +920,7 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
 /* Open tabs column keeps the grid layout */
 .dashboard-columns .active-section {
   flex: 1;
-  min-width: 600px;
+  min-width: 0;
 }
 
 /* Saved for later column — fixed width on the right, scrolls independently */
@@ -1156,3 +1178,41 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
   opacity: 0.6;
   flex-shrink: 0;
 }
+
+[hidden] { display: none !important; }
+
+.global-search { margin-bottom: 28px; }
+.global-search label { display: block; font-size: 13px; margin-bottom: 8px; }
+.global-search kbd { color: var(--muted); margin-left: 6px; }
+.global-search input {
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--card-bg);
+  border: 1px solid var(--warm-gray);
+  border-radius: 8px;
+}
+.search-hint, #searchStatus { font-size: 12px; color: var(--muted); margin: 8px 0 16px; }
+#searchResults h2 { font-size: 15px; margin: 20px 0 8px; }
+.search-result {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  background: var(--card-bg);
+  border: 1px solid var(--warm-gray);
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+.search-result-title, .search-result-url { overflow-wrap: anywhere; }
+.search-result-url { font-size: 12px; color: var(--muted); }
+.search-result:hover, .search-result[aria-selected="true"] { border-color: var(--accent-amber); }
+.search-result:disabled { opacity: 0.5; cursor: default; }
+:focus-visible { outline: 2px solid var(--accent-amber); outline-offset: 3px; }
+.live-updates .mission-card, .live-updates .deferred-item { animation: none !important; }
