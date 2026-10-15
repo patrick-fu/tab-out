@@ -13,12 +13,18 @@ No server. No account. No external API calls. Just a Chrome extension.
 Send your coding agent (Claude Code, Codex, etc.) this repo and say **"install this"**:
 
 ```
-https://github.com/zarazhangrui/tab-out
+https://github.com/patrick-fu/tab-out
 ```
 
 The agent will walk you through it. Takes about 1 minute.
 
 ---
+
+## Fork improvements
+
+- **Theme selector:** System (default), Light, or Dark. The choice is saved locally and shared across Tab Out pages.
+- **Stable layout:** cards use a row-based grid, so closing a tab does not rebalance cards between columns. Removing an entire group fills its space while preserving the remaining groups’ relative order.
+- **Persistent group order:** the first load keeps the original homepage/priority/tab-count ordering. Later loads preserve existing groups and append new groups; groups no longer open are removed from the saved order.
 
 ## Features
 
@@ -40,7 +46,7 @@ The agent will walk you through it. Takes about 1 minute.
 **1. Clone the repo**
 
 ```bash
-git clone https://github.com/zarazhangrui/tab-out.git
+git clone https://github.com/patrick-fu/tab-out.git
 ```
 
 **2. Load the Chrome extension**
@@ -81,6 +87,12 @@ Everything runs inside the Chrome extension. No external server, no API calls, n
 | Animations | CSS transitions + JS confetti particles |
 
 ---
+
+## Verification
+
+Run `node --check extension/app.js` and `node --check extension/theme.js`. For browser regression checks, run `python3 -m http.server 8765 --bind 127.0.0.1` from the repository root and open `http://127.0.0.1:8765/tests/`. All six checks should report PASS. The harness loads the actual dashboard with disposable Chrome API fixtures; it never reads or closes real browser tabs. It covers deletion layout, persisted group order, adding/removing groups, theme persistence and cross-page synchronization, and responsive layout with the saved sidebar.
+
+The extension itself still requires no Node.js, Python, or build step. Load the `extension/` directory from this checkout in `chrome://extensions`.
 
 ## License
 

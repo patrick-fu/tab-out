@@ -1142,6 +1142,22 @@ async function renderStaticDashboard() {
     return b.tabs.length - a.tabs.length;
   });
 
+  // Keep the first-seen order across reloads; tab counts must not move existing groups.
+  try {
+    const { groupOrder = [] } = await chrome.storage.local.get('groupOrder');
+    const remaining = new Map(domainGroups.map(group => [group.domain, group]));
+    const ordered = [];
+    for (const domain of Array.isArray(groupOrder) ? groupOrder : []) {
+      if (!remaining.has(domain)) continue;
+      ordered.push(remaining.get(domain));
+      remaining.delete(domain);
+    }
+    domainGroups = [...ordered, ...remaining.values()];
+    await chrome.storage.local.set({ groupOrder: domainGroups.map(group => group.domain) });
+  } catch (err) {
+    console.error('[tab-out] Failed to persist group order:', err);
+  }
+
   // --- Render domain cards ---
   const openTabsSection      = document.getElementById('openTabsSection');
   const openTabsMissionsEl   = document.getElementById('openTabsMissions');
