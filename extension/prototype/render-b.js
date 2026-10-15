@@ -1,6 +1,6 @@
 /**
  * Tab Out UI Prototype - Variant B: 纸上索引 (Paper Index / Editorial Index)
- * 
+ *
  * 布局特色：
  * 1. 纸质出版物编目质感，雅致的排版层次，沉静克制且具人文气息
  * 2. 稳定的按域名卡片网格（2-3 列响应式），每个域名卡片具备精致的线框与条目编目
@@ -51,11 +51,11 @@ export function renderVariantB(container) {
       <nav class="vb-toolbar">
         <div class="vb-search-box">
           <span style="color: var(--ink-muted); display: flex;">${icons.search}</span>
-          <input 
-            type="text" 
-            class="vb-search-input" 
+          <input
+            type="text"
+            class="vb-search-input"
             id="vbSearchInput"
-            placeholder="在编目中索引长标题或网址... [/]" 
+            placeholder="在编目中索引长标题或网址... [/]"
             value="${store.searchQuery.replace(/[&<>"\']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","\'":"&#39;"})[char])}"
             autocomplete="off"
           />
@@ -126,8 +126,8 @@ export function renderVariantB(container) {
                   const isSelected = store.selectedTabId === tab.id;
                   const winObj = store.windows.find(w => w.id === tab.windowId);
                   return `
-                    <div 
-                      class="vb-entry-row ${isSelected ? 'selected' : ''}" 
+                    <div
+                      class="vb-entry-row ${isSelected ? 'selected' : ''}"
                       data-tab-id="${tab.id}"
                       tabindex="0"
                     >

@@ -1,6 +1,6 @@
 /**
  * Tab Out UI Prototype - Main Entry & Controller
- * 
+ *
  * 协调 Variant A/B/C 渲染、共享底栏切换、全局键盘流（/、↑↓、Enter、Esc）、Toast 反馈系统。
  * 纯内存虚拟原型，零远端依赖，不调用真实 Chrome 扩展 API。
  */

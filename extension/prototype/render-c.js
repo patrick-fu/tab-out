@@ -1,6 +1,6 @@
 /**
  * Tab Out UI Prototype - Variant C: 快捷启动器 (Quick Launcher / Command Center)
- * 
+ *
  * 布局特色：
  * 1. 深色优先（Command Palette / Raycast 质感），键盘驱动极速流
  * 2. 搜索居中与指令聚焦：全局模糊检索、智能场景分类分组、数字索引序号
@@ -32,8 +32,8 @@ export function renderVariantC(container) {
   }
 
   // Section 2: Localhost & Engineering (Window 1 or localhost/github)
-  const devTabs = filteredTabs.filter(t => 
-    (t.domain.includes('localhost') || t.domain.includes('github')) && 
+  const devTabs = filteredTabs.filter(t =>
+    (t.domain.includes('localhost') || t.domain.includes('github')) &&
     !(sections[0]?.id === 'dupes' && dupes.has(t.url))
   );
   if (devTabs.length > 0) {
@@ -46,8 +46,8 @@ export function renderVariantC(container) {
   }
 
   // Section 3: Collaboration & Design (feishu, figma)
-  const collabTabs = filteredTabs.filter(t => 
-    (t.domain.includes('feishu') || t.domain.includes('figma')) && 
+  const collabTabs = filteredTabs.filter(t =>
+    (t.domain.includes('feishu') || t.domain.includes('figma')) &&
     !(sections[0]?.id === 'dupes' && dupes.has(t.url))
   );
   if (collabTabs.length > 0) {
@@ -60,8 +60,8 @@ export function renderVariantC(container) {
   }
 
   // Section 4: Tech & Reference (mdn, zhihu, juejin)
-  const refTabs = filteredTabs.filter(t => 
-    (t.domain.includes('mozilla') || t.domain.includes('zhihu') || t.domain.includes('juejin')) && 
+  const refTabs = filteredTabs.filter(t =>
+    (t.domain.includes('mozilla') || t.domain.includes('zhihu') || t.domain.includes('juejin')) &&
     !(sections[0]?.id === 'dupes' && dupes.has(t.url))
   );
   if (refTabs.length > 0) {
@@ -94,11 +94,11 @@ export function renderVariantC(container) {
         <!-- Spotlight Search Bar -->
         <div class="vc-input-wrap">
           <span class="vc-input-icon">${icons.command}</span>
-          <input 
-            type="text" 
-            class="vc-input" 
+          <input
+            type="text"
+            class="vc-input"
             id="vcInput"
-            placeholder="搜索标签、执行跳转、网址过滤... [/]" 
+            placeholder="搜索标签、执行跳转、网址过滤... [/]"
             value="${store.searchQuery.replace(/[&<>"\']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","\'":"&#39;"})[char])}"
             autocomplete="off"
             autofocus
@@ -161,8 +161,8 @@ export function renderVariantC(container) {
                 const indexLabel = globalIndexCounter <= 9 ? globalIndexCounter : '·';
 
                 return `
-                  <div 
-                    class="vc-command-row ${isSelected ? 'selected' : ''}" 
+                  <div
+                    class="vc-command-row ${isSelected ? 'selected' : ''}"
                     data-tab-id="${tab.id}"
                     tabindex="0"
                   >

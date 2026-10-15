@@ -1,6 +1,6 @@
 /**
  * Tab Out UI Prototype - State Management (In-Memory Only)
- * 
+ *
  * 完全在内存中维护状态，绝不调用真实 Chrome 扩展 API，不读写 localStorage。
  * 切换变体（A/B/C）时保留当前演示状态（剩余标签、保存列表、主题、搜索词）。
  */
@@ -283,8 +283,8 @@ class PrototypeStore {
     // Apply searchQuery
     if (this.searchQuery && this.searchQuery.trim()) {
       const q = this.searchQuery.trim().toLowerCase();
-      list = list.filter(t => 
-        t.title.toLowerCase().includes(q) || 
+      list = list.filter(t =>
+        t.title.toLowerCase().includes(q) ||
         t.url.toLowerCase().includes(q) ||
         t.domain.toLowerCase().includes(q)
       );

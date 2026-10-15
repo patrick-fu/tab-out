@@ -1,6 +1,6 @@
 /**
  * Tab Out UI Prototype - Variant A: 静谧工作台 (Serene Workbench)
- * 
+ *
  * 布局特色：
  * 1. 三栏工作台架构（侧边分组导航 + 紧凑标签工作流 + 详情与稍后阅读检视器）
  * 2. 沉静工整，极高信息密度，极其适合工程研发与多任务并行分拣
@@ -106,11 +106,11 @@ export function renderVariantA(container) {
         <header class="va-stream-header">
           <div class="va-search-bar">
             <span class="va-search-icon">${icons.search}</span>
-            <input 
-              type="text" 
-              class="va-search-input" 
+            <input
+              type="text"
+              class="va-search-input"
               id="vaSearchInput"
-              placeholder="搜索标签标题、网址或域名... [/]" 
+              placeholder="搜索标签标题、网址或域名... [/]"
               value="${store.searchQuery.replace(/[&<>"\']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","\'":"&#39;"})[char])}"
               autocomplete="off"
             />
@@ -162,8 +162,8 @@ export function renderVariantA(container) {
                       const isSelected = selectedTab && selectedTab.id === tab.id;
                       const winObj = store.windows.find(w => w.id === tab.windowId);
                       return `
-                        <div 
-                          class="va-tab-row ${isSelected ? 'selected' : ''}" 
+                        <div
+                          class="va-tab-row ${isSelected ? 'selected' : ''}"
                           data-tab-id="${tab.id}"
                           tabindex="0"
                         >

@@ -1,6 +1,6 @@
 /**
  * Tab Out UI Prototype - Mock Dataset
- * 
+ *
  * 包含约24个标签、7个域名、3个窗口、中文长标题、重复项、稍后阅读与归档。
  * 纯内存虚拟数据，不连接真实Chrome API或LocalStorage。
  */

@@ -1,6 +1,6 @@
 /**
  * Tab Out UI Prototype - Shared Floating Switcher Bar
- * 
+ *
  * 仅在 localhost、127.0.0.1 或 file: 协议展示，防止误发布。
  * 提供前后箭头、方案直选、主题切换、演示状态指示（方案/主题/检索/剩余数）、重置按钮。
  * 支持左右方向键切换方案（在 input / textarea / select 内不拦截左右键）。
