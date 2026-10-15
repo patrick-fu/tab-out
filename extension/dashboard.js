@@ -205,6 +205,12 @@ searchInput.addEventListener('input', () => {
   selectedSearchKey = null;
   renderSearch();
 });
+document.getElementById('searchResults').addEventListener('focusin', event => {
+  const button = event.target.closest('[data-search-key]');
+  if (!button || button.disabled) return;
+  selectedSearchKey = button.dataset.searchKey;
+  updateSearchSelection();
+});
 document.getElementById('searchResults').addEventListener('click', event => {
   const button = event.target.closest('[data-search-key]');
   if (button) openSearchResult(button.dataset.searchKey);
