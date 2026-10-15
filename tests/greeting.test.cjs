@@ -20,13 +20,14 @@ for (const [hour, minute, expected] of [
   test(`Dashboard greeting at local ${hour}:${String(minute).padStart(2, '0')}`, async () => {
     const now = new Date(2026, 9, 15, hour, minute).getTime();
     const greeting = { textContent: '' };
+    const date = { textContent: '' };
     const context = vm.createContext({
       console,
       Date: class extends Date {
         constructor(...args) { super(...(args.length ? args : [now])); }
       },
       document: {
-        getElementById: id => id === 'greeting' ? greeting : null,
+        getElementById: id => id === 'greeting' ? greeting : id === 'dateDisplay' ? date : null,
         addEventListener() {},
       },
       chrome: {
@@ -36,7 +37,8 @@ for (const [hour, minute, expected] of [
       },
     });
 
-    await vm.runInContext(app, context);
+    vm.runInContext(app, context);
+    await vm.runInContext('let savedTabs; renderStaticDashboard()', context);
     assert.equal(greeting.textContent, expected);
   });
 }

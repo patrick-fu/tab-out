@@ -22,6 +22,9 @@ The agent will walk you through it. Takes about 1 minute.
 
 ## Fork improvements
 
+- **Safe rendering:** titles, URLs, saved IDs, and custom group labels are escaped as text. Saved links accept only HTTP, HTTPS, and file URLs. Inline JavaScript event handlers have been removed for Manifest V3 compatibility.
+- **Global search:** case-insensitive title/URL substring search across all windows, overflow tabs, saved items, and archives. Results retain source order and identify each open tab separately, including duplicate URLs and browser settings pages. `/` focuses search, ↑/↓ selects, Enter focuses an existing tab or opens a saved link, and Esc clears/exits. A disappearing selected result clears selection instead of opening its neighbor.
+- **Foreground updates:** tab and saved-list changes refresh only while Tab Out is visible in the focused window. Background pages do not query or redraw; returning to the foreground catches up once. Event bursts are coalesced without polling. Updates preserve search, surviving selections, expansion, focus, scroll, and group order.
 - **Late-night greeting:** midnight through 04:59 says “Hello, night owl”; “Good morning” starts at 05:00, using the browser's local time.
 - **Theme selector:** System (default), Light, or Dark. The choice is saved locally and shared across Tab Out pages.
 - **Stable layout:** cards use a row-based grid, so closing a tab does not rebalance cards between columns. Removing an entire group fills its space while preserving the remaining groups’ relative order.
@@ -93,7 +96,7 @@ Everything runs inside the Chrome extension. No external server, no API calls, n
 
 Run `node --test tests/greeting.test.cjs` to check the rendered greeting at midnight, 01:00, and each morning/afternoon/evening boundary.
 
-Run `node --check extension/app.js` and `node --check extension/theme.js`. For browser regression checks, run `python3 -m http.server 8765 --bind 127.0.0.1` from the repository root and open `http://127.0.0.1:8765/tests/`. All six checks should report PASS. The harness loads the actual dashboard with disposable Chrome API fixtures; it never reads or closes real browser tabs. It covers deletion layout, persisted group order, adding/removing groups, theme persistence and cross-page synchronization, and responsive layout with the saved sidebar.
+Run `node --check extension/app.js`, `node --check extension/dashboard.js`, and `node --check extension/theme.js`. For browser regression checks, run `python3 -m http.server 8765 --bind 127.0.0.1` from the repository root and open `http://127.0.0.1:8765/tests/`. All 19 checks should report PASS. The harness loads the actual dashboard with disposable Chrome API fixtures; it never reads or closes real browser tabs. It covers layout and themes, inert rendering under extension-style CSP, cross-source search and keyboard actions, exact tab targeting, foreground/background query counts, delayed and superseded reads, state preservation, read failures, and local mutations. The fixture simulates focus and visibility; loading into a real Chrome extension is still a separate manual check.
 
 The extension itself still requires no Node.js, Python, or build step. Load the `extension/` directory from this checkout in `chrome://extensions`.
 
