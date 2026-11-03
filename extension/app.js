@@ -848,7 +848,7 @@ function renderDeferredItem(item) {
       <input type="checkbox" class="deferred-checkbox" data-action="check-deferred" data-deferred-id="${escapeHtml(item.id)}">
       <div class="deferred-info">
         <a ${savedLink(item.url) ? `href="${escapeHtml(savedLink(item.url))}"` : 'aria-disabled="true"'} target="_blank" rel="noopener" class="deferred-title" data-focus-key="saved-${escapeHtml(item.id)}" title="${escapeHtml(item.title)}">
-          <img src="${escapeHtml(faviconUrl(item.url))}" alt="" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px">${escapeHtml(item.title || item.url)}
+          <img src="${escapeHtml(faviconUrl(item.url))}" alt="">${escapeHtml(item.title || item.url)}
         </a>
         <div class="deferred-meta">
           <span>${escapeHtml(domain)}</span>

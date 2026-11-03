@@ -548,7 +548,7 @@ function background() {
         assert(src.protocol === 'chrome-extension:' && src.hostname === 'fixture' && src.pathname === '/_favicon/', 'Icon bypasses Chrome favicon cache');
         const pageUrl = icon.closest('.page-chip')?.dataset.tabUrl || icon.closest('a').href;
         assert(src.searchParams.get('pageUrl') === pageUrl, 'Icon URL lost page path, port or query');
-        assert(src.searchParams.get('size') === '32', 'Icon is not requested at double resolution');
+        assert(src.searchParams.get('size') === '32', 'Icon is not requested at high resolution');
       }
     });
     document.title = `${failures ? 'FAIL' : 'PASS'} — Tab Out regression checks`;
