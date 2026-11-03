@@ -515,6 +515,26 @@ function background() {
       foreground(true);
       await until(() => frame.contentDocument.querySelector('.mission-card'), 'Foreground did not perform first render');
     });
+    await check('A visible page with the omnibox focused paints once and defers live updates', async () => {
+      foreground(false);
+      tabs.push(...fixture('omnibox.example', 1, 1901));
+      try {
+        await loadDashboard();
+        assert(frame.contentDocument.querySelector('[data-tab-id="1901"]'), 'First paint left the tab list empty');
+        const beforeQueries = queryCount;
+        const beforeStorage = storageReads;
+        const added = fixture('pending.example', 1, 1902)[0];
+        tabs.push(added);
+        window.fixtureChrome.tabs.onCreated.emit(added);
+        await pause();
+        assert(queryCount === beforeQueries && storageReads === beforeStorage, 'Unfocused page performed live reads after first paint');
+        assert(!frame.contentDocument.querySelector('[data-tab-id="1902"]'), 'Unfocused page refreshed after first paint');
+        foreground(true);
+        await until(() => frame.contentDocument.querySelector('[data-tab-id="1902"]'), 'Focus did not catch up with pending changes');
+      } finally {
+        foreground(true);
+      }
+    });
     document.title = `${failures ? 'FAIL' : 'PASS'} — Tab Out regression checks`;
   } finally {
     if (originalTheme === null) localStorage.removeItem('theme');

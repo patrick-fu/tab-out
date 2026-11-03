@@ -11,7 +11,8 @@ let searchEntries = [];
 let selectedSearchKey = null;
 
 function isForeground() {
-  return document.visibilityState === 'visible' && document.hasFocus();
+  // New tabs keep focus in the omnibox until the user enters the page.
+  return document.visibilityState === 'visible' && (document.hasFocus() || !hasRendered);
 }
 
 function matchesSearch(item, query) {
