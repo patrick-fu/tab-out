@@ -28,6 +28,13 @@ function savedLink(url) {
   } catch { return ''; }
 }
 
+function faviconUrl(pageUrl) {
+  const url = new URL(chrome.runtime.getURL('/_favicon/'));
+  url.searchParams.set('pageUrl', pageUrl);
+  url.searchParams.set('size', '32');
+  return url.href;
+}
+
 function domainId(domain) {
   return 'domain-' + encodeURIComponent(domain);
 }
@@ -638,11 +645,8 @@ function buildOverflowChips(hiddenTabs, urlCounts = {}) {
     const chipClass = count > 1 ? ' chip-has-dupes' : '';
     const safeUrl   = escapeHtml(tab.url);
     const safeTitle = escapeHtml(label);
-    let domain = '';
-    try { domain = new URL(tab.url).hostname; } catch {}
-    const faviconUrl = domain ? `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=16` : '';
     return `<div class="page-chip clickable${chipClass}" data-action="focus-tab" tabindex="0" role="link" data-tab-id="${tab.id}" data-tab-url="${safeUrl}" title="${safeTitle}">
-      ${faviconUrl ? `<img class="chip-favicon" src="${faviconUrl}" alt="">` : ''}
+      <img class="chip-favicon" src="${escapeHtml(faviconUrl(tab.url))}" alt="">
       <span class="chip-text">${escapeHtml(label)}</span>${dupeTag}
       <div class="chip-actions">
         <button class="chip-action chip-save" data-action="defer-single-tab" data-tab-id="${tab.id}" data-tab-url="${safeUrl}" data-tab-title="${safeTitle}" title="Save for later">
@@ -719,11 +723,8 @@ function renderDomainCard(group) {
     const chipClass = count > 1 ? ' chip-has-dupes' : '';
     const safeUrl   = escapeHtml(tab.url);
     const safeTitle = escapeHtml(label);
-    let domain = '';
-    try { domain = new URL(tab.url).hostname; } catch {}
-    const faviconUrl = domain ? `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=16` : '';
     return `<div class="page-chip clickable${chipClass}" data-action="focus-tab" tabindex="0" role="link" data-tab-id="${tab.id}" data-tab-url="${safeUrl}" title="${safeTitle}">
-      ${faviconUrl ? `<img class="chip-favicon" src="${faviconUrl}" alt="">` : ''}
+      <img class="chip-favicon" src="${escapeHtml(faviconUrl(tab.url))}" alt="">
       <span class="chip-text">${escapeHtml(label)}</span>${dupeTag}
       <div class="chip-actions">
         <button class="chip-action chip-save" data-action="defer-single-tab" data-tab-id="${tab.id}" data-tab-url="${safeUrl}" data-tab-title="${safeTitle}" title="Save for later">
@@ -840,7 +841,6 @@ function renderDeferredColumn(saved) {
 function renderDeferredItem(item) {
   let domain = '';
   try { domain = new URL(item.url).hostname.replace(/^www\./, ''); } catch {}
-  const faviconUrl = `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=16`;
   const ago = timeAgo(item.savedAt);
 
   return `
@@ -848,7 +848,7 @@ function renderDeferredItem(item) {
       <input type="checkbox" class="deferred-checkbox" data-action="check-deferred" data-deferred-id="${escapeHtml(item.id)}">
       <div class="deferred-info">
         <a ${savedLink(item.url) ? `href="${escapeHtml(savedLink(item.url))}"` : 'aria-disabled="true"'} target="_blank" rel="noopener" class="deferred-title" data-focus-key="saved-${escapeHtml(item.id)}" title="${escapeHtml(item.title)}">
-          <img src="${faviconUrl}" alt="" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px">${escapeHtml(item.title || item.url)}
+          <img src="${escapeHtml(faviconUrl(item.url))}" alt="" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px">${escapeHtml(item.title || item.url)}
         </a>
         <div class="deferred-meta">
           <span>${escapeHtml(domain)}</span>

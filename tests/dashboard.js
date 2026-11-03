@@ -85,7 +85,7 @@ function fixtureEvent() {
 }
 
 window.fixtureChrome = {
-  runtime: { id: 'fixture' },
+  runtime: { id: 'fixture', getURL: path => `chrome-extension://fixture${path}` },
   windows: { update: async () => {} },
   tabs: {
     ...Object.fromEntries(['onCreated', 'onRemoved', 'onMoved', 'onAttached', 'onDetached', 'onReplaced', 'onUpdated'].map(name => [name, fixtureEvent()])),
@@ -533,6 +533,22 @@ function background() {
         await until(() => frame.contentDocument.querySelector('[data-tab-id="1902"]'), 'Focus did not catch up with pending changes');
       } finally {
         foreground(true);
+      }
+    });
+    await check('Visible, overflow and saved favicons use Chrome cache with the complete page URL', async () => {
+      tabs = fixture('icons.example', 10, 2000);
+      tabs[0].url = 'http://localhost:3000/app?x="&y=<test>';
+      storage.deferred = [{ id: 'icon-saved', title: 'Saved icon', url: 'https://saved.example/path?a=1&b=2' }];
+      await loadDashboard();
+      const doc = frame.contentDocument;
+      const icons = [...doc.querySelectorAll('.chip-favicon, .deferred-title img')];
+      assert(icons.length === 11, 'Missing visible, overflow or saved icons');
+      for (const icon of icons) {
+        const src = new URL(icon.src);
+        assert(src.protocol === 'chrome-extension:' && src.hostname === 'fixture' && src.pathname === '/_favicon/', 'Icon bypasses Chrome favicon cache');
+        const pageUrl = icon.closest('.page-chip')?.dataset.tabUrl || icon.closest('a').href;
+        assert(src.searchParams.get('pageUrl') === pageUrl, 'Icon URL lost page path, port or query');
+        assert(src.searchParams.get('size') === '32', 'Icon is not requested at double resolution');
       }
     });
     document.title = `${failures ? 'FAIL' : 'PASS'} — Tab Out regression checks`;
