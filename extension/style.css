@@ -388,6 +388,13 @@ header {
   border-radius: 2px;
 }
 
+.chip-favicon,
+.deferred-title img {
+  object-fit: contain;
+  background: #fff;
+  border-radius: 2px;
+}
+
 /* Title text — wraps naturally, no truncation */
 .chip-text {
   flex: 1;
