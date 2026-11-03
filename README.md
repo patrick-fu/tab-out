@@ -49,7 +49,7 @@ The agent will walk you through it. Takes about 1 minute.
 
 ## Manual Setup
 
-Download `tab-out-1.1.1.zip` from the [latest release](https://github.com/patrick-fu/tab-out/releases/latest), extract it, and load the extracted folder in `chrome://extensions` using **Load unpacked** with **Developer mode** enabled. The release package contains the extension directly; no build is required.
+Download `tab-out-1.2.0.zip` from the [latest release](https://github.com/patrick-fu/tab-out/releases/latest), extract it, and load the extracted folder in `chrome://extensions` using **Load unpacked** with **Developer mode** enabled. The release package contains the extension directly; no build is required.
 
 Alternatively, install from source:
 
