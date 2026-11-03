@@ -82,7 +82,7 @@ header {
 .header-left h1 {
   font-family: var(--font-heading);
   font-weight: 500;
-  font-size: 32px;
+  font-size: 44px;
   letter-spacing: -0.5px;
   color: var(--ink);
   margin-bottom: 4px;
@@ -298,7 +298,7 @@ header {
 
 .mission-name {
   font-weight: 600;
-  font-size: 13px;
+  font-size: 16px;
   color: var(--ink);
   letter-spacing: -0.2px;
 }
@@ -382,14 +382,30 @@ header {
 
 /* Favicon */
 .chip-favicon {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
+}
+
+.chip-favicon,
+.deferred-title img {
+  object-fit: contain;
+  background: #fff;
   border-radius: 2px;
+}
+
+.deferred-title img {
+  width: 20px;
+  height: 20px;
+  vertical-align: -4px;
+  margin-right: 6px;
 }
 
 /* Title text — wraps naturally, no truncation */
 .chip-text {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
   flex: 1;
   min-width: 0;
   /* Show up to 2 lines, then ellipsis */
@@ -987,7 +1003,8 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
 }
 
 .deferred-title {
-  font-size: 13px;
+  font-size: 15px;
+  font-weight: 500;
   color: var(--ink);
   text-decoration: none;
   display: block;

@@ -22,7 +22,8 @@ The agent will walk you through it. Takes about 1 minute.
 
 ## Fork improvements
 
-- **Index styling:** adopts prototype B’s typography, fine borders, and compact rows while retaining the original greeting, domain-card grid, and saved sidebar. Uses local system fonts in both light and dark themes.
+- **Local website icons:** open tabs, overflow rows and saved items use Chrome’s favicon cache for the complete page URL, including localhost ports and paths. No third-party favicon service is contacted. Sites without a cached icon still use Chrome’s fallback.
+- **Index styling:** retains the original greeting, domain-card grid, and saved sidebar with fine borders and compact rows. The selected title variant A uses 15px page titles, 16px group names and a 44px greeting, with 20px website icons. Uses local system fonts in both light and dark themes.
 - **Safe rendering:** titles, URLs, saved IDs, and custom group labels are escaped as text. Saved links accept only HTTP, HTTPS, and file URLs. Inline JavaScript event handlers have been removed for Manifest V3 compatibility.
 - **Global search:** case-insensitive title/URL substring search across all windows, overflow tabs, saved items, and archives. Results retain source order and identify each open tab separately, including duplicate URLs and browser settings pages. `/` focuses search, ↑/↓ selects, Enter focuses an existing tab or opens a saved link, and Esc clears/exits. A disappearing selected result clears selection instead of opening its neighbor.
 - **Foreground updates:** a visible page paints its first dashboard even when the address bar has focus. After that, tab and saved-list changes refresh only while Tab Out is visible and the page has focus. Hidden pages do not query or redraw; returning to the foreground catches up once. Event bursts are coalesced without polling. Updates preserve search, surviving selections, expansion, focus, scroll, and group order.
@@ -48,7 +49,7 @@ The agent will walk you through it. Takes about 1 minute.
 
 ## Manual Setup
 
-Download `tab-out-1.1.1.zip` from the [latest release](https://github.com/patrick-fu/tab-out/releases/latest), extract it, and load the extracted folder in `chrome://extensions` using **Load unpacked** with **Developer mode** enabled. The release package contains the extension directly; no build is required.
+Download `tab-out-1.2.0.zip` from the [latest release](https://github.com/patrick-fu/tab-out/releases/latest), extract it, and load the extracted folder in `chrome://extensions` using **Load unpacked** with **Developer mode** enabled. The release package contains the extension directly; no build is required.
 
 Alternatively, install from source:
 
@@ -101,7 +102,7 @@ Everything runs inside the Chrome extension. No external server, no API calls, n
 
 Run `node --test tests/greeting.test.cjs` to check the rendered greeting at midnight, 01:00, and each morning/afternoon/evening boundary.
 
-Run `node --check extension/app.js`, `node --check extension/dashboard.js`, and `node --check extension/theme.js`. For browser regression checks, run `python3 -m http.server 8765 --bind 127.0.0.1` from the repository root and open `http://127.0.0.1:8765/tests/`. All 20 checks should report PASS. The harness loads the actual dashboard with disposable Chrome API fixtures; it never reads or closes real browser tabs. It covers layout and themes, inert rendering under extension-style CSP, cross-source search and keyboard actions, exact tab targeting, foreground/background query counts, first paint with the address bar focused, delayed and superseded reads, state preservation, read failures, and local mutations. The fixture simulates focus and visibility; loading into a real Chrome extension is still a separate manual check.
+Run `node --check extension/app.js`, `node --check extension/dashboard.js`, and `node --check extension/theme.js`. For browser regression checks, run `python3 -m http.server 8765 --bind 127.0.0.1` from the repository root and open `http://127.0.0.1:8765/tests/`. All 21 checks should report PASS. The harness loads the actual dashboard with disposable Chrome API fixtures; it never reads or closes real browser tabs. It covers layout and themes, inert rendering under extension-style CSP, cross-source search and keyboard actions, exact tab targeting, foreground/background query counts, first paint with the address bar focused, local favicon URLs, delayed and superseded reads, state preservation, read failures, and local mutations. The fixture simulates focus and visibility; loading into a real Chrome extension is still a separate manual check.
 
 The extension itself still requires no Node.js, Python, or build step. Load the `extension/` directory from this checkout in `chrome://extensions`.
 
