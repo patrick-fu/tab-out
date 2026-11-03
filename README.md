@@ -22,6 +22,7 @@ The agent will walk you through it. Takes about 1 minute.
 
 ## Fork improvements
 
+- **Index styling:** adopts prototype B’s typography, fine borders, and compact rows while retaining the original greeting, domain-card grid, and saved sidebar. Uses local system fonts in both light and dark themes.
 - **Safe rendering:** titles, URLs, saved IDs, and custom group labels are escaped as text. Saved links accept only HTTP, HTTPS, and file URLs. Inline JavaScript event handlers have been removed for Manifest V3 compatibility.
 - **Global search:** case-insensitive title/URL substring search across all windows, overflow tabs, saved items, and archives. Results retain source order and identify each open tab separately, including duplicate URLs and browser settings pages. `/` focuses search, ↑/↓ selects, Enter focuses an existing tab or opens a saved link, and Esc clears/exits. A disappearing selected result clears selection instead of opening its neighbor.
 - **Foreground updates:** tab and saved-list changes refresh only while Tab Out is visible in the focused window. Background pages do not query or redraw; returning to the foreground catches up once. Event bursts are coalesced without polling. Updates preserve search, surviving selections, expansion, focus, scroll, and group order.

@@ -5,10 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tab Out</title>
 
-  <!-- Google Fonts: Newsreader (for headings/numbers) + DM Sans (for body text) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-
   <script src="theme.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -38,10 +34,11 @@
   </header>
 
   <div class="global-search">
-    <label for="globalSearch">Search all tabs <kbd>/</kbd></label>
-    <input id="globalSearch" type="search" placeholder="Search titles or URLs…" autocomplete="off"
+    <label for="globalSearch" class="visually-hidden">Search all tabs</label>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+    <input id="globalSearch" type="search" placeholder="Search titles or URLs…  /" autocomplete="off"
+      title="/ Search · ↑ ↓ Select · Enter Open · Esc Clear" aria-keyshortcuts="/"
       role="combobox" aria-expanded="false" aria-controls="searchResults" aria-autocomplete="list">
-    <p class="search-hint">↑ ↓ select · Enter open · Esc clear</p>
   </div>
   <section id="searchPanel" hidden aria-label="Search results">
     <p id="searchStatus" role="status"></p>
